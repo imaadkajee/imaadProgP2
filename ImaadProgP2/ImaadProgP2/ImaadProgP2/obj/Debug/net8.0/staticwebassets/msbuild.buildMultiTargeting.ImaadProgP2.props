@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ImaadProgP2.props" />
+</Project>

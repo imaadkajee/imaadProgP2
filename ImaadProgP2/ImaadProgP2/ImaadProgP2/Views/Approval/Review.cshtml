@@ -1,0 +1,130 @@
+﻿@model ImaadProgP2.Models.Claims
+
+@{
+    ViewBag.Title = "Review Claim";
+}
+
+<h1>Review Claim</h1>
+
+<style>
+    body {
+        background-image: url('@Url.Content("~/images/pexels-artempodrez-7233099.jpg")');
+        background-size: cover;
+        background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #fff;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 2.5em; /* Increased size for better visibility */
+        font-weight: bold; /* Bold font for emphasis */
+    }
+
+    .container {
+        background: rgba(0, 0, 0, 0.8); /* Slightly darker for better contrast */
+        padding: 30px; /* Increased padding for spaciousness */
+        border-radius: 8px;
+        width: 90%;
+        max-width: 800px;
+        margin: 20px auto; /* Added margin for separation from top */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    }
+
+        .container h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.8em; /* Increased size for better visibility */
+            font-weight: bold;
+        }
+
+        .container p {
+            color: #ddd;
+            margin-bottom: 15px; /* Increased spacing for clarity */
+            line-height: 1.5; /* Better line height for readability */
+        }
+
+            .container p strong {
+                color: #fff;
+                font-weight: bold; /* Ensure strong elements are bold */
+            }
+
+        .container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+            .container a:hover {
+                text-decoration: underline;
+            }
+
+    .btn {
+        border-radius: 5px;
+        padding: 12px 25px; /* More padding for larger buttons */
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 15px;
+        transition: background-color 0.3s, transform 0.2s; /* Smooth transition */
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        color: #fff;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+        color: #fff;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+</style>
+
+<div class="container">
+    <h3>Claim Details</h3>
+    <p><strong>Lecturer ID:</strong> @Model.LecturerID</p>
+    <p><strong>Name:</strong> @Model.FirstName @Model.LastName</p>
+    <p><strong>Period:</strong> @Model.ClaimsPeriodStart.ToShortDateString() to @Model.ClaimsPeriodEnd.ToShortDateString()</p>
+    <p><strong>Hours Worked:</strong> @Model.HoursWorked</p>
+    <p><strong>Rate Per Hour:</strong> @Model.RatePerHour.ToString("C")</p>
+    <p><strong>Total Amount:</strong> @Model.TotalAmount.ToString("C")</p>
+    <p><strong>Description:</strong> @Model.DescriptionOfWork</p>
+    <p>
+        <strong>Document:</strong>
+        @if (!string.IsNullOrEmpty(Model.DocumentPath))
+        {
+            <a href="@Model.DocumentPath" target="_blank" aria-label="View Document">View Document</a>
+        }
+        else
+        {
+            <span>No Document Uploaded</span>
+        }
+    </p>
+
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+        <form asp-action="ApproveConfirmed" method="post" asp-route-id="@Model.Id" style="flex: 1; margin-right: 10px;">
+            <button type="submit" class="btn btn-success" aria-label="Approve Claim">Approve</button>
+        </form>
+
+        <form asp-action="RejectConfirmed" method="post" asp-route-id="@Model.Id" style="flex: 1; margin-left: 10px;">
+            <button type="submit" class="btn btn-danger" aria-label="Reject Claim">Reject</button>
+        </form>
+    </div>
+</div>

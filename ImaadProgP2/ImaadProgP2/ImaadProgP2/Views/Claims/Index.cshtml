@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ImaadProgP2.Models.Claims>
+
+@{
+    ViewBag.Title = "Claims List";
+}
+
+<h1>Claims List</h1>
+
+<style>
+    body {
+        background-size: cover;
+        background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        color: #fff; /* Default text color for better readability on the background */
+    }
+
+    h1 {
+        color: #fff; /* White text for header */
+        text-align: center;
+        margin: 20px 0;
+    }
+
+
+
+    .table {
+        background-color: rgba(255, 255, 255, 0.9); /* White background with slight opacity */
+        color: #333;
+        border-radius: 8px;
+        border: 1px solid #ddd; /* Light border for separation */
+        margin: 0 auto; /* Center the table */
+        width: 100%;
+        table-layout: auto;
+    }
+
+        .table th, .table td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .table th {
+            background-color: #007bff; /* Bootstrap primary color for header */
+            color: #fff; /* White text color for header */
+        }
+
+        .table td a {
+            color: #007bff; /* Bootstrap primary color for links */
+        }
+
+    .btn-info {
+        /* Bootstrap info button color */
+        border-color: #17a2b8;
+        color: #fff; /* White text for buttons */
+    }
+
+        .btn-info:hover {
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+</style>
+
+<div class="overlay">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LecturerID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>ClaimsPeriodStart</th>
+                <th>ClaimsPeriodEnd</th>
+                <th>HoursWorked</th>
+                <th>RatePerHour</th>
+                <th>TotalAmount</th>
+                <th>DescriptionOfWork</th>
+                <th>DocumentPath</th>
+                <th>ApprovalStatus</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.LecturerID</td>
+                    <td>@claim.FirstName</td>
+                    <td>@claim.LastName</td>
+                    <td>@claim.ClaimsPeriodStart.ToShortDateString()</td>
+                    <td>@claim.ClaimsPeriodEnd.ToShortDateString()</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>@claim.RatePerHour</td>
+                    <td>@claim.TotalAmount</td>
+                    <td>@claim.DescriptionOfWork</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                        {
+                            <a href="@claim.DocumentPath" target="_blank">View Document</a>
+                        }
+                    </td>
+                    <td>@claim.ApprovalStatus</td>
+                    <td>
+                        <a asp-controller="Approval" asp-action="Review" asp-route-id="@claim.Id" class="btn btn-info">Review</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

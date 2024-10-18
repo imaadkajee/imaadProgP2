@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ImaadProgP2.Models.Claims>
+
+@{
+    ViewBag.Title = "Status Overview";
+}
+
+<h1>Status Overview</h1>
+
+<style>
+    body {
+        background-size: cover;
+        background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff; /* White text color for better contrast */
+    }
+
+
+
+    .table {
+        background-color: rgba(255, 255, 255, 0.8); /* White background with opacity */
+        color: #333; /* Dark text for readability */
+        border-radius: 8px;
+    }
+
+        .table th, .table td {
+            text-align: center;
+        }
+
+    h1 {
+        color: #fff; /* White text for header */
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    a {
+        color: #007bff; /* Bootstrap primary color for links */
+    }
+</style>
+
+<div class="overlay">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LecturerID</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>ClaimsPeriodStart</th>
+                <th>ClaimsPeriodEnd</th>
+                <th>HoursWorked</th>
+                <th>RatePerHour</th>
+                <th>TotalAmount</th>
+                <th>DescriptionOfWork</th>
+                <th>DocumentPath</th>
+                <th>ApprovalStatus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var claim in Model)
+            {
+                <tr>
+                    <td>@claim.LecturerID</td>
+                    <td>@claim.FirstName</td>
+                    <td>@claim.LastName</td>
+                    <td>@claim.ClaimsPeriodStart.ToShortDateString()</td>
+                    <td>@claim.ClaimsPeriodEnd.ToShortDateString()</td>
+                    <td>@claim.HoursWorked</td>
+                    <td>@claim.RatePerHour</td>
+                    <td>@claim.TotalAmount</td>
+                    <td>@claim.DescriptionOfWork</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(claim.DocumentPath))
+                        {
+                            <a href="@claim.DocumentPath" target="_blank">View Document</a>
+                        }
+                    </td>
+                    <td>@claim.ApprovalStatus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
